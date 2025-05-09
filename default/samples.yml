@@ -1,0 +1,12 @@
+6c68s6:
+  sampleName: CriblIngress_NGINX_LinSysMetrics_20250508.log
+  ttl: 0
+  created: 1746751010705
+  size: 110539
+  numEvents: 91
+v6aaEj:
+  sampleName: CriblHTTP_In_Nginx-LinuxSys.log
+  ttl: 0
+  created: 1746760337815
+  size: 108419
+  numEvents: 100

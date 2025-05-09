@@ -1,0 +1,75 @@
+output: default
+streamtags: []
+groups: {}
+asyncFuncTimeout: 1000
+functions:
+  - id: eval
+    filter: cribl_group==null && cribl_fleet==null && __forwardedAttrs.fleet!=null
+    disabled: null
+    conf:
+      add:
+        - disabled: false
+          name: cribl_fleet
+          value: __forwardedAttrs.fleet
+        - disabled: false
+          name: datacenter
+          value: __forwardedAttrs.fleet.split('_')[1]
+    description: Cleanup for failed tagging in Edge
+  - id: lookup
+    filter: "true"
+    disabled: null
+    conf:
+      dbLookup: false
+      matchMode: exact
+      reloadPeriodSec: 600
+      inFields:
+        - eventField: account_id
+          lookupField: account_id
+        - eventField: sourcetype
+          lookupField: sourcetype
+        - eventField: event_type
+          lookupField: event_type
+      addToEvent: false
+      ignoreCase: false
+      file: Event_Routing_Dataset_Index.csv
+      outFields:
+        - lookupField: cribl_dataset
+          eventField: cribl_dataset
+          defaultValue: "null"
+        - lookupField: app_class
+          eventField: app_class
+          defaultValue: "null"
+  - id: aggregation
+    filter: "true"
+    disabled: null
+    conf:
+      passthrough: true
+      preserveGroupBys: true
+      sufficientStatsOnly: false
+      metricsMode: true
+      timeWindow: 10s
+      aggregations:
+        - count(_raw).as('value')
+      cumulative: false
+      shouldTreatDotsAsLiterals: false
+      flushOnInputClose: true
+      add:
+        - name: cribl_dataset
+          value: "'TripPop_Wbsrv_Metrics'"
+        - name: app_class
+          value: "'011y'"
+        - name: app
+          value: "'Cribl_Stream'"
+        - name: metric
+          value: "'events_count_source-grouping-by-fleet'"
+        - name: metric_type
+          value: "'counter'"
+        - name: sourcetype
+          value: "'cribl_agg_function'"
+      groupbys:
+        - cribl_dataset
+        - app_class
+        - app
+        - sourcetype
+        - cribl_fleet
+description: ""

@@ -1,0 +1,94 @@
+output: default
+streamtags: []
+groups: {}
+asyncFuncTimeout: 1000
+functions:
+  - id: drop
+    filter: "!account_id==(TripPop) ||!app.includes('nginx-rp') ||
+      !sourcetype=='nginx-rp-access-custom'"
+    disabled: null
+    conf: {}
+    final: true
+  - id: eval
+    filter: cribl_group==null
+    disabled: null
+    conf:
+      add:
+        - disabled: false
+          name: cribl_group
+          value: __forwardedAttrs.fleet
+        - disabled: false
+          name: datacenter
+          value: __forwardedAttrs.fleet.split('_')[1]
+    description: Cleanup for failed tagging in Edge
+  - id: serde
+    filter: "true"
+    disabled: false
+    conf:
+      mode: extract
+      type: json
+      srcField: _raw
+      keep: []
+  - id: eval
+    filter: Client_IP.includes('.')
+    disabled: null
+    conf:
+      add:
+        - disabled: false
+          name: Client_Network
+          value: __e.Client_IP.replace(/(\d{1,3}\.\d{1,3}\.).\d{1,3}\.*/, '$1') + '.0/24'
+  - id: eval
+    filter: Client_IP.includes(':')
+    disabled: null
+    conf:
+      add:
+        - disabled: false
+          value: "`${__e['Client_IP'].split(':').slice(0, 4).join(':')}::/56`"
+          name: Client_Network
+  - id: geoip
+    filter: "true"
+    disabled: null
+    conf:
+      inField: Client_IP
+      outField: Client_Locale
+      outFieldMappings: {}
+      file: GeoLite2-City.mmdb
+  - id: geoip
+    filter: "true"
+    disabled: null
+    conf:
+      inField: Client_IP
+      outField: Client_AS
+      outFieldMappings: {}
+      file: GeoLite2-ASN.mmdb
+  - id: eval
+    filter: "true"
+    disabled: false
+    conf:
+      add:
+        - disabled: false
+          name: Cient_Geo_Continent
+          value: Client_Locale.contient.code
+        - disabled: false
+          name: Client_Geo_Country
+          value: Client_Locale.country.iso_code
+        - disabled: false
+          name: Client_Geo_City
+          value: Client_Locale.city.names.en
+        - disabled: false
+          name: Client_Geo_Lat
+          value: Client_Locale.location.latitude
+        - disabled: false
+          name: Client_Geo_Lon
+          value: Client_Locale.location.longitude
+        - disabled: false
+          name: Client_Net_ASN
+          value: Client_AS.autonomous_system_number
+        - disabled: false
+          name: Client_Net_ISP
+          value: Client_AS.autonomous_system_organization
+      remove:
+        - Client_Locale
+        - Client_AS
+      keep: []
+description: ""

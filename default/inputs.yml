@@ -1,0 +1,25 @@
+inputs:
+  cribl_in_10443:
+    disabled: false
+    sendToRoutes: true
+    pqEnabled: false
+    streamtags: []
+    host: 0.0.0.0
+    tls:
+      disabled: false
+      requestCert: false
+      privKeyPath: $CRIBL_CLOUD_KEY
+      certPath: $CRIBL_CLOUD_CRT
+    maxActiveReq: 256
+    maxRequestsPerSocket: 0
+    enableProxyHeader: false
+    captureHeaders: false
+    activityLogSampleRate: 100
+    requestTimeout: 0
+    socketTimeout: 0
+    keepAliveTimeout: 5
+    enableHealthCheck: false
+    ipAllowlistRegex: /.*/
+    ipDenylistRegex: /^$/
+    type: cribl_http
+    port: 10443

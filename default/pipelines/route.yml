@@ -1,0 +1,38 @@
+id: default
+groups: {}
+comments: []
+routes:
+  - id: default
+    name: TripPop | Websrv | Reverse Proxy | NGINX | Access Logs - Custom
+    final: true
+    disabled: false
+    pipeline: nginx-rp-access-custom
+    description: ""
+    enableOutputExpression: false
+    outputExpression: null
+    filter: cribl_dataset=='TripPop_Wbsrv_Logs' && sourcetype=="nginx-rp-access-custom"
+    clones: []
+    output: TripPop_Wbsrv_Logs
+  - id: g7OYcw
+    name: TripPop | Websrv | Reverse Proxy | NGINX | Error Logs - Default
+    final: true
+    disabled: false
+    pipeline: nginx-rp-error-default
+    description: ""
+    enableOutputExpression: false
+    outputExpression: null
+    filter: cribl_dataset=='TripPop_Wbsrv_Logs' && sourcetype=="nginx-rp-error-default"
+    clones: []
+    output: TripPop_Wbsrv_Logs
+  - id: dYday2
+    name: "TripPop | Websrv |ServerHost | LinuxOS | Metrics "
+    final: true
+    disabled: false
+    pipeline: passthru
+    description: ""
+    enableOutputExpression: false
+    outputExpression: null
+    filter: cribl_dataset=='TripPop_Wbsrv_Metrics' &&
+      sourcetype=="linux-system-metrics-edge"
+    clones: []
+    output: TripPop_Wbsrv_Metrics

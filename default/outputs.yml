@@ -1,0 +1,65 @@
+outputs:
+  TripPop_Wbsrv_Logs:
+    systemFields: []
+    streamtags: []
+    signatureVersion: v4
+    reuseConnections: true
+    rejectUnauthorized: true
+    enableAssumeRole: false
+    durationSeconds: 3600
+    stagePath: $CRIBL_HOME/state/outputs/staging
+    addIdToStagePath: true
+    objectACL: private
+    removeEmptyDirs: true
+    baseFileName: "`CriblOut`"
+    fileNameSuffix: '`.${C.env["CRIBL_WORKER_ID"]}.${__format}${__compression ===
+      "gzip" ? ".gz" : ""}`'
+    maxFileSizeMB: 32
+    maxOpenFiles: 100
+    headerLine: ""
+    writeHighWaterMark: 64
+    onBackpressure: block
+    deadletterEnabled: false
+    onDiskFullBackpressure: block
+    maxFileOpenTimeSec: 300
+    maxFileIdleTimeSec: 30
+    verifyPermissions: true
+    maxClosingFilesToBackpressure: 100
+    awsAuthenticationMethod: auto
+    maxConcurrentFileParts: 1
+    emptyDirCleanupSec: 300
+    type: cribl_lake
+    destPath: TripPop_Wbsrv_Logs
+    compress: gzip
+  TripPop_Wbsrv_Metrics:
+    systemFields: []
+    streamtags: []
+    signatureVersion: v4
+    reuseConnections: true
+    rejectUnauthorized: true
+    enableAssumeRole: false
+    durationSeconds: 3600
+    stagePath: $CRIBL_HOME/state/outputs/staging
+    addIdToStagePath: true
+    objectACL: private
+    removeEmptyDirs: true
+    baseFileName: "`CriblOut`"
+    fileNameSuffix: '`.${C.env["CRIBL_WORKER_ID"]}.${__format}${__compression ===
+      "gzip" ? ".gz" : ""}`'
+    maxFileSizeMB: 32
+    maxOpenFiles: 100
+    headerLine: ""
+    writeHighWaterMark: 64
+    onBackpressure: block
+    deadletterEnabled: false
+    onDiskFullBackpressure: block
+    maxFileOpenTimeSec: 300
+    maxFileIdleTimeSec: 30
+    verifyPermissions: true
+    maxClosingFilesToBackpressure: 100
+    awsAuthenticationMethod: auto
+    maxConcurrentFileParts: 1
+    emptyDirCleanupSec: 300
+    type: cribl_lake
+    destPath: TripPop_Wbsrv_Metrics
+    compress: gzip
