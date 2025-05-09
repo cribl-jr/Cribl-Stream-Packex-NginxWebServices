@@ -1,0 +1,4 @@
+"account_id","event_type","sourcetype","cribl_dataset","app_class"
+"TripPop","log","nginx-rp-access-custom","TripPop_Wbsrv_Logs","Reverse_Proxy"
+"TripPop","log","nginx-rp-error-default","TripPop_Wbsrv_Logs","Reverse_Proxy"
+"TripPop","metric","linux-system-metrics-edge","TripPop_Wbsrv_Metrics","Server_Host"
