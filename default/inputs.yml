@@ -22,4 +22,4 @@ inputs:
     ipAllowlistRegex: /.*/
     ipDenylistRegex: /^$/
     type: cribl_http
-    port: 10443
+    port: 10200
